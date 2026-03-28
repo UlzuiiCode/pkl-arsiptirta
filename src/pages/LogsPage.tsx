@@ -58,7 +58,7 @@ const LogsPage = () => {
                       <TableCell className="text-sm text-muted-foreground whitespace-nowrap">
                         {new Date(log.created_at).toLocaleString('id-ID')}
                       </TableCell>
-                      <TableCell className="font-medium">{(log.profiles as any)?.full_name || '-'}</TableCell>
+                      <TableCell className="font-medium">{log.user_id?.slice(0, 8) || '-'}</TableCell>
                       <TableCell>
                         <Badge variant={log.action === 'DELETE' ? 'destructive' : 'secondary'} className="text-xs">
                           {actionLabels[log.action] || log.action}
