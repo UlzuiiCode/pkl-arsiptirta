@@ -19,7 +19,7 @@ const LogsPage = () => {
     const fetch = async () => {
       const { data } = await supabase
         .from('activity_logs')
-        .select('*, profiles:user_id(full_name)')
+        .select('*')
         .order('created_at', { ascending: false })
         .limit(100);
       setLogs(data || []);
