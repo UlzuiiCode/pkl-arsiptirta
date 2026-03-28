@@ -14,16 +14,170 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      activity_logs: {
+        Row: {
+          action: string
+          created_at: string
+          details: Json | null
+          entity_id: string | null
+          entity_type: string
+          id: string
+          user_id: string | null
+        }
+        Insert: {
+          action: string
+          created_at?: string
+          details?: Json | null
+          entity_id?: string | null
+          entity_type: string
+          id?: string
+          user_id?: string | null
+        }
+        Update: {
+          action?: string
+          created_at?: string
+          details?: Json | null
+          entity_id?: string | null
+          entity_type?: string
+          id?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      categories: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          full_name: string
+          id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          full_name?: string
+          id?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          full_name?: string
+          id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      vouchers: {
+        Row: {
+          amount: number
+          category_id: string | null
+          created_at: string
+          created_by: string | null
+          description: string
+          file_name: string | null
+          file_url: string | null
+          id: string
+          month: number
+          updated_at: string
+          voucher_date: string
+          voucher_number: string
+          year: number
+        }
+        Insert: {
+          amount?: number
+          category_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          description: string
+          file_name?: string | null
+          file_url?: string | null
+          id?: string
+          month: number
+          updated_at?: string
+          voucher_date?: string
+          voucher_number: string
+          year: number
+        }
+        Update: {
+          amount?: number
+          category_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string
+          file_name?: string | null
+          file_url?: string | null
+          id?: string
+          month?: number
+          updated_at?: string
+          voucher_date?: string
+          voucher_number?: string
+          year?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "vouchers_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "staff"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +304,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "staff"],
+    },
   },
 } as const
